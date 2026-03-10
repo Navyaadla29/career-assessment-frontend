@@ -1,15 +1,65 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Scoring() {
   const navigate = useNavigate();
+  const [scores, setScores] = useState({
+    aptitude: 0,
+    creativity: 0,
+    commerce: 0,
+    leadership: 0
+  });
 
-  const scores = [
-    { category: 'Aptitude & Logic', score: 35, max: 100, color: '#4f46e5' },
-    { category: 'Creativity & Expression', score: 34, max: 100, color: '#7c3aed' },
-    { category: 'Commerce & Finance', score: 28, max: 100, color: '#ec4899' },
-    { category: 'Leadership & People', score: 22, max: 100, color: '#f59e0b' }
-  ];
+  useEffect(() => {
+    calculateScores();
+  }, []);
+
+  const calculateScores = () => {
+    // Get all module answers from localStorage
+    const module1 = JSON.parse(localStorage.getItem('module1') || '{}');
+    const module2 = JSON.parse(localStorage.getItem('module2') || '{}');
+    const module3 = JSON.parse(localStorage.getItem('module3') || '{}');
+    const module4 = JSON.parse(localStorage.getItem('module4') || '{}');
+    const module5 = JSON.parse(localStorage.getItem('module5') || '{}');
+    const module6 = JSON.parse(localStorage.getItem('module6') || '{}');
+    const module7 = JSON.parse(localStorage.getItem('module7') || '{}');
+
+    // Calculate scores based on answers
+    // This is a simplified calculation - you can make it more complex
+    const aptitudeScore = calculateCategoryScore([module2, module6]);
+    const creativityScore = calculateCategoryScore([module1, module3]);
+    const commerceScore = calculateCategoryScore([module4, module6]);
+    const leadershipScore = calculateCategoryScore([module3, module5, module7]);
+
+    setScores({
+      aptitude: aptitudeScore,
+      creativity: creativityScore,
+      commerce: commerceScore,
+      leadership: leadershipScore
+    });
+
+    // Save total scores for dashboard
+    localStorage.setItem('totalScores', JSON.stringify({
+      aptitude: aptitudeScore,
+      creativity: creativityScore,
+      commerce: commerceScore,
+      leadership: leadershipScore
+    }));
+  };
+
+  const calculateCategoryScore = (modules) => {
+    let total = 0;
+    let count = 0;
+    
+    modules.forEach(module => {
+      Object.values(module).forEach(value => {
+        total += Number(value) || 0;
+        count++;
+      });
+    });
+    
+    return count > 0 ? Math.round((total / count) * 10) : 0;
+  };
 
   return (
     <div style={styles.container}>
@@ -19,21 +69,61 @@ function Scoring() {
       </div>
 
       <div style={styles.scoresContainer}>
-        {scores.map((item, index) => (
-          <div key={index} style={styles.scoreCard}>
-            <div style={styles.scoreHeader}>
-              <span style={styles.category}>{item.category}</span>
-              <span style={styles.scoreValue}>{item.score}/{item.max}</span>
-            </div>
-            <div style={styles.scoreBar}>
-              <div style={{
-                ...styles.scoreFill,
-                width: `${(item.score/item.max)*100}%`,
-                background: item.color
-              }}></div>
-            </div>
+        <div style={styles.scoreCard}>
+          <div style={styles.scoreHeader}>
+            <span style={styles.category}>Aptitude & Logic</span>
+            <span style={styles.scoreValue}>{scores.aptitude}/100</span>
           </div>
-        ))}
+          <div style={styles.scoreBar}>
+            <div style={{
+              ...styles.scoreFill,
+              width: `${scores.aptitude}%`,
+              background: '#4f46e5'
+            }}></div>
+          </div>
+        </div>
+
+        <div style={styles.scoreCard}>
+          <div style={styles.scoreHeader}>
+            <span style={styles.category}>Creativity & Expression</span>
+            <span style={styles.scoreValue}>{scores.creativity}/100</span>
+          </div>
+          <div style={styles.scoreBar}>
+            <div style={{
+              ...styles.scoreFill,
+              width: `${scores.creativity}%`,
+              background: '#7c3aed'
+            }}></div>
+          </div>
+        </div>
+
+        <div style={styles.scoreCard}>
+          <div style={styles.scoreHeader}>
+            <span style={styles.category}>Commerce & Finance</span>
+            <span style={styles.scoreValue}>{scores.commerce}/100</span>
+          </div>
+          <div style={styles.scoreBar}>
+            <div style={{
+              ...styles.scoreFill,
+              width: `${scores.commerce}%`,
+              background: '#ec4899'
+            }}></div>
+          </div>
+        </div>
+
+        <div style={styles.scoreCard}>
+          <div style={styles.scoreHeader}>
+            <span style={styles.category}>Leadership & People</span>
+            <span style={styles.scoreValue}>{scores.leadership}/100</span>
+          </div>
+          <div style={styles.scoreBar}>
+            <div style={{
+              ...styles.scoreFill,
+              width: `${scores.leadership}%`,
+              background: '#f59e0b'
+            }}></div>
+          </div>
+        </div>
       </div>
 
       <button 
