@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Module6_AcademicTrack() {
+function Module7_FutureGoals() {
   const navigate = useNavigate();
   const [answers, setAnswers] = useState({});
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -9,56 +9,56 @@ function Module6_AcademicTrack() {
   const questions = [
     {
       id: 1,
-      text: "In which cluster of subjects do you consistently achieve the highest grades?",
+      text: "You are given $100,000. What do you do with it?",
       options: [
-        "Mathematics & Pure Sciences",
-        "Humanities, History & Languages",
-        "Accountancy, Economics & Business Studies",
-        "Physical Education / Electives"
+        "Invest it in a diversified stock portfolio",
+        "Fund your own tech startup or laboratory",
+        "Produce an independent film or art exhibition",
+        "Start a business and hire a team to rapidly scale it"
       ],
       scores: [5,4,3,2]
     },
     {
       id: 2,
-      text: "What is your preferred method of learning and examination?",
+      text: "The world is ending in a week. How do you spend your time?",
       options: [
-        "Solving numerical problems and derivations",
-        "Writing long essays and debating theories",
-        "Case studies, mock markets, and financial tallying",
-        "Giving presentations and leading group projects"
+        "Solving complex problems and documenting solutions",
+        "Creating art, music, or writing to express yourself",
+        "Helping and comforting as many people as possible",
+        "Organizing communities and leading efforts"
       ],
       scores: [5,4,3,2]
     },
     {
       id: 3,
-      text: "Which type of extracurricular activity did/do you prefer?",
+      text: "If you could have any superpower, what would it be?",
       options: [
-        "Robotics, Coding, or Science Club",
-        "Drama, Music, or Art Club",
-        "Math Olympiad or Finance Club",
-        "Student Council or Debate Team"
+        "Super intelligence and knowledge",
+        "Ability to create anything from imagination",
+        "Healing powers to help others",
+        "Mind control to lead and influence"
       ],
       scores: [5,4,3,2]
     },
     {
       id: 4,
-      text: "How do you prefer to handle large assignments?",
+      text: "What kind of legacy do you want to leave behind?",
       options: [
-        "Breaking it down into algorithmic, logical steps",
-        "Brainstorming non-linear, creative approaches",
-        "Creating a strict timeline and budget constraint",
-        "Delegating parts of it to a team"
+        "Scientific discoveries or technological breakthroughs",
+        "Artistic masterpieces that inspire generations",
+        "A healthier, happier society",
+        "A successful empire or organization"
       ],
       scores: [5,4,3,2]
     },
     {
       id: 5,
-      text: "If you had to read a 500-page book for class, which topic would you choose?",
+      text: "In 10 years, where do you see yourself?",
       options: [
-        "The History of Space Exploration and Physics",
-        "A profound fictional novel or poetry anthology",
-        "The Rise and Fall of the Global Economy",
-        "Biographies of famous CEOs and Leaders"
+        "Leading research and innovation in my field",
+        "Expressing myself through creative work",
+        "Making a direct impact on people's lives",
+        "Running a successful company or organization"
       ],
       scores: [5,4,3,2]
     }
@@ -71,9 +71,9 @@ function Module6_AcademicTrack() {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      localStorage.setItem('module6', JSON.stringify(answers));
-      // Calculate all scores and go to scoring page
-      navigate('/module7');
+      // Save all module answers and go to scoring
+      localStorage.setItem('module7', JSON.stringify(answers));
+      navigate('/scoring');
     }
   };
 
@@ -82,8 +82,9 @@ function Module6_AcademicTrack() {
   return (
     <div style={styles.container}>
       <div style={styles.header}>
-        <span style={styles.module}>Module 6 of 6 | Academic Track</span>
-        <h2 style={styles.title}>Academic Track Assessment</h2>
+        <span style={styles.module}>Module 7 of 7 | Future Goals</span>
+        <h2 style={styles.title}>Future Goals Assessment</h2>
+        <div style={styles.timer}>8:41</div>
         <div style={styles.progressBar}>
           <div style={{...styles.progress, width: `${((currentQuestion + 1)/questions.length)*100}%`}}></div>
         </div>
@@ -125,6 +126,11 @@ const styles = {
   },
   title: {
     fontSize: '2rem',
+    marginBottom: '0.5rem'
+  },
+  timer: {
+    color: '#aaa',
+    fontSize: '0.9rem',
     marginBottom: '1rem'
   },
   progressBar: {
@@ -165,8 +171,9 @@ const styles = {
     color: 'white',
     fontSize: '1rem',
     cursor: 'pointer',
-    textAlign: 'left'
+    textAlign: 'left',
+    transition: 'all 0.3s ease'
   }
 };
 
-export default Module6_AcademicTrack;
+export default Module7_FutureGoals;
