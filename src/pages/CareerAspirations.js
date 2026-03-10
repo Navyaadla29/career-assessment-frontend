@@ -7,7 +7,11 @@ function CareerAspirations() {
   const [dreamGoal, setDreamGoal] = useState('');
 
   const handleLaunch = () => {
-    navigate('/scoring');
+    // Save aspirations to localStorage
+    localStorage.setItem('aspirations', JSON.stringify({ impact, dreamGoal }));
+    
+    // THIS IS THE FIX - Go to module1, NOT scoring!
+    navigate('/module1');
   };
 
   const handleBack = () => {

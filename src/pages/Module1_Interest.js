@@ -45,9 +45,8 @@ function Module1_Interest() {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      // Save answers and go to next module
       localStorage.setItem('module1', JSON.stringify(answers));
-      navigate('/module2');
+      navigate('/module2'); // Go to next module
     }
   };
 
@@ -56,7 +55,7 @@ function Module1_Interest() {
   return (
     <div style={styles.container}>
       <div style={styles.header}>
-        <span style={styles.module}>Module 1 of 6 | Interest</span>
+        <span style={styles.module}>Module 1 of 7 | Interest</span>
         <h2 style={styles.title}>Interests Assessment</h2>
         <div style={styles.progressBar}>
           <div style={{...styles.progress, width: `${((currentQuestion + 1)/questions.length)*100}%`}}></div>
@@ -68,12 +67,6 @@ function Module1_Interest() {
         <p style={styles.question}>{q.text}</p>
         
         <div style={styles.optionsContainer}>
-          <div style={styles.scale}>
-            {q.options.map(num => (
-              <div key={num} style={styles.scaleNumber}>{num}</div>
-            ))}
-          </div>
-          
           <div style={styles.buttonsGrid}>
             {q.options.map(value => (
               <button
@@ -138,22 +131,6 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '1rem'
-  },
-  scale: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '0 0.5rem'
-  },
-  scaleNumber: {
-    width: '30px',
-    height: '30px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    background: '#2a2a3a',
-    borderRadius: '50%',
-    color: '#4f46e5',
-    fontWeight: 'bold'
   },
   buttonsGrid: {
     display: 'grid',
