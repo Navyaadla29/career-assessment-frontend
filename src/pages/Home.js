@@ -1,50 +1,75 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Home() {
+  const [displayText, setDisplayText] = useState('');
+  const fullText = 'Discover Your True Potential';
+
+  useEffect(() => {
+    let i = 0;
+    const typing = setInterval(() => {
+      if (i < fullText.length) {
+        setDisplayText(fullText.slice(0, i + 1));
+        i++;
+      } else {
+        clearInterval(typing);
+      }
+    }, 80);
+    return () => clearInterval(typing);
+  }, []);
+
+  const features = [
+    { icon: '🎯', title: '7-Dimensional Analysis', desc: 'Interest, Aptitude, Personality, Values, Work Style, Academic, Future Goals' },
+    { icon: '📊', title: 'Real-Time Scoring', desc: 'Advanced algorithm calculates your unique profile scores' },
+    { icon: '🚀', title: '5-Year Roadmap', desc: 'Personalized action plan with milestones and checkpoints' },
+    { icon: '💡', title: 'Smart Recommendations', desc: 'AI-powered career matches with skill gap analysis' }
+  ];
+
   return (
     <div style={styles.container}>
       <div style={styles.hero}>
-        <h1 style={styles.title}>Discover Your <span style={styles.gradient}>True Potential</span></h1>
+        <h1 style={styles.title}>
+          {displayText}
+          <span style={styles.cursor}>|</span>
+        </h1>
         <p style={styles.subtitle}>
-          Take our incredibly accurate, AI-powered multidimensional assessment 
-          to find your ideal career path and action plan.
+          Take our incredibly accurate, AI-powered multidimensional assessment to find your ideal career path and action plan.
         </p>
+        
+        <div style={styles.statsRow}>
+          <div style={styles.statCard}>
+            <div style={styles.statNumber}>7</div>
+            <div style={styles.statLabel}>Assessment Modules</div>
+          </div>
+          <div style={styles.statCard}>
+            <div style={styles.statNumber}>35+</div>
+            <div style={styles.statLabel}>Questions</div>
+          </div>
+          <div style={styles.statCard}>
+            <div style={styles.statNumber}>100+</div>
+            <div style={styles.statLabel}>Career Paths</div>
+          </div>
+          <div style={styles.statCard}>
+            <div style={styles.statNumber}>5</div>
+            <div style={styles.statLabel}>Year Roadmap</div>
+          </div>
+        </div>
+
+        <Link to="/profile">
+          <button style={styles.ctaButton}>
+            Begin Your Journey →
+          </button>
+        </Link>
       </div>
 
-      <div style={styles.features}>
-        <div style={styles.featureCard}>
-          <div style={styles.featureIcon}>📊</div>
-          <h3 style={styles.featureTitle}>5-Dimensional Analysis</h3>
-          <p style={styles.featureDesc}>Evaluates Interests, Aptitude, Personality, Values, and Academic Strength.</p>
-        </div>
-        <div style={styles.featureCard}>
-          <div style={styles.featureIcon}>🎯</div>
-          <h3 style={styles.featureTitle}>5-Year Action Plan</h3>
-          <p style={styles.featureDesc}>Get a step-by-step sequential roadmap tailored to your specific goals and traits.</p>
-        </div>
-        <div style={styles.featureCard}>
-          <div style={styles.featureIcon}>⚡</div>
-          <h3 style={styles.featureTitle}>Priority Match Scoring</h3>
-          <p style={styles.featureDesc}>We rank your best alternative careers through algorithmic probability vectors.</p>
-        </div>
-      </div>
-
-      <div style={styles.beginSection}>
-        <h2 style={styles.beginTitle}>Begin Assessment</h2>
-        <div style={styles.formCard}>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Full Name</label>
-            <input style={styles.input} type="text" placeholder="John Doe" />
+      <div style={styles.featuresGrid}>
+        {features.map((feature, index) => (
+          <div key={index} style={styles.featureCard}>
+            <div style={styles.featureIcon}>{feature.icon}</div>
+            <h3 style={styles.featureTitle}>{feature.title}</h3>
+            <p style={styles.featureDesc}>{feature.desc}</p>
           </div>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Email Address</label>
-            <input style={styles.input} type="email" placeholder="john@example.com" />
-          </div>
-          <Link to="/profile">
-            <button style={styles.button}>Continue to Profile Capture →</button>
-          </Link>
-        </div>
+        ))}
       </div>
     </div>
   );
@@ -54,40 +79,79 @@ const styles = {
   container: {
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '2rem'
+    padding: '2rem',
+    minHeight: '100vh'
   },
   hero: {
     textAlign: 'center',
-    padding: '4rem 0 2rem'
+    padding: '4rem 0'
   },
   title: {
     fontSize: '3.5rem',
     fontWeight: '800',
-    marginBottom: '1rem'
-  },
-  gradient: {
-    background: 'linear-gradient(45deg, #4f46e5, #7c3aed)',
+    background: 'linear-gradient(135deg, #fff, #a855f7)',
     WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent'
+    WebkitTextFillColor: 'transparent',
+    marginBottom: '1.5rem'
+  },
+  cursor: {
+    display: 'inline-block',
+    width: '3px',
+    animation: 'blink 1s infinite'
   },
   subtitle: {
     fontSize: '1.2rem',
-    color: '#aaa',
-    maxWidth: '800px',
-    margin: '0 auto',
+    color: 'rgba(255,255,255,0.8)',
+    maxWidth: '700px',
+    margin: '0 auto 2rem',
     lineHeight: '1.6'
   },
-  features: {
+  statsRow: {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '3rem',
+    marginBottom: '3rem',
+    flexWrap: 'wrap'
+  },
+  statCard: {
+    textAlign: 'center',
+    padding: '1rem'
+  },
+  statNumber: {
+    fontSize: '2.5rem',
+    fontWeight: '800',
+    color: '#a855f7'
+  },
+  statLabel: {
+    fontSize: '0.9rem',
+    color: 'rgba(255,255,255,0.6)'
+  },
+  ctaButton: {
+    background: 'linear-gradient(135deg, #4f46e5, #a855f7)',
+    color: 'white',
+    border: 'none',
+    padding: '1rem 2rem',
+    fontSize: '1.1rem',
+    fontWeight: '600',
+    borderRadius: '50px',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 0 20px rgba(79, 70, 229, 0.4)'
+  },
+  featuresGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
     gap: '2rem',
-    padding: '4rem 0'
+    marginTop: '4rem'
   },
   featureCard: {
-    background: '#1e1e2f',
-    padding: '2rem',
+    background: 'rgba(255, 255, 255, 0.05)',
+    backdropFilter: 'blur(10px)',
     borderRadius: '20px',
-    textAlign: 'center'
+    padding: '2rem',
+    textAlign: 'center',
+    transition: 'all 0.3s ease',
+    border: '1px solid rgba(255, 255, 255, 0.1)'
   },
   featureIcon: {
     fontSize: '2.5rem',
@@ -95,58 +159,13 @@ const styles = {
   },
   featureTitle: {
     fontSize: '1.2rem',
-    marginBottom: '1rem',
+    marginBottom: '0.5rem',
     color: 'white'
   },
   featureDesc: {
-    color: '#aaa',
-    fontSize: '0.95rem',
-    lineHeight: '1.6'
-  },
-  beginSection: {
-    textAlign: 'center',
-    padding: '2rem 0'
-  },
-  beginTitle: {
-    fontSize: '2rem',
-    marginBottom: '2rem'
-  },
-  formCard: {
-    maxWidth: '400px',
-    margin: '0 auto',
-    background: '#1e1e2f',
-    padding: '2rem',
-    borderRadius: '20px'
-  },
-  formGroup: {
-    marginBottom: '1.5rem',
-    textAlign: 'left'
-  },
-  label: {
-    display: 'block',
-    marginBottom: '0.5rem',
-    color: '#aaa',
-    fontSize: '0.9rem'
-  },
-  input: {
-    width: '100%',
-    padding: '0.75rem',
-    background: '#2a2a3a',
-    border: '1px solid #333',
-    borderRadius: '10px',
-    color: 'white',
-    fontSize: '1rem'
-  },
-  button: {
-    width: '100%',
-    padding: '1rem',
-    background: 'linear-gradient(45deg, #4f46e5, #7c3aed)',
-    color: 'white',
-    border: 'none',
-    borderRadius: '10px',
-    fontSize: '1rem',
-    fontWeight: '600',
-    cursor: 'pointer'
+    fontSize: '0.9rem',
+    color: 'rgba(255,255,255,0.7)',
+    lineHeight: '1.5'
   }
 };
 
