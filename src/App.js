@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Login from "./pages/Login";
 import Home from "./pages/Home";
 import ProfileDNA from "./pages/ProfileDNA";
 import PersonalDNA from "./pages/PersonalDNA";
@@ -23,7 +24,8 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<ProfileDNA />} />
         <Route path="/personal-dna" element={<PersonalDNA />} />
         <Route path="/career-aspirations" element={<CareerAspirations />} />
