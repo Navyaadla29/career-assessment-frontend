@@ -5,7 +5,6 @@ import Timer from '../components/Timer';
 function Module3_Personality() {
   const navigate = useNavigate();
   const [answers, setAnswers] = useState({});
-  const [currentQuestion, setCurrentQuestion] = useState(0);
 
   const questions = [
     { id: 1, text: "I prefer working independently and taking deep dives into technical problems rather than working in large social groups.", options: ["Strongly Agree", "Agree", "Neutral", "Disagree", "Strongly Disagree"], scores: [5,4,3,2,1] },
@@ -15,18 +14,18 @@ function Module3_Personality() {
     { id: 5, text: "I am naturally curious and enjoy learning new things outside my comfort zone.", options: ["Strongly Agree", "Agree", "Neutral", "Disagree", "Strongly Disagree"], scores: [5,4,3,2,1] }
   ];
 
-  const handleAnswer = (index) => {
-    const score = questions[currentQuestion].scores[index];
-    setAnswers({ ...answers, [questions[currentQuestion].id]: score });
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      localStorage.setItem('module3', JSON.stringify(answers));
-      navigate('/module4');
-    }
+  const handleAnswerChange = (questionId, score) => {
+    setAnswers({ ...answers, [questionId]: score });
   };
 
-  const q = questions[currentQuestion];
+  const handleSubmit = () => {
+    if (Object.keys(answers).length !== questions.length) {
+      alert('Please answer all questions before proceeding.');
+      return;
+    }
+    localStorage.setItem('module3', JSON.stringify(answers));
+    navigate('/module4');
+  };
 
   return (
     <div style={styles.container}>
@@ -34,37 +33,115 @@ function Module3_Personality() {
       <div style={styles.header}>
         <span style={styles.module}>Module 3 of 7 | Personality</span>
         <h2 style={styles.title}>Personality Assessment</h2>
-        <div style={styles.progressBar}>
-          <div style={{...styles.progress, width: `${((currentQuestion + 1)/questions.length)*100}%`}}></div>
-        </div>
-        <p style={styles.counter}>Question {currentQuestion + 1} of {questions.length}</p>
+        <p style={styles.instruction}>Please answer all 5 questions below</p>
       </div>
-      <div style={styles.card}>
-        <p style={styles.question}>{q.text}</p>
-        <div style={styles.options}>
-          {q.options.map((option, index) => (
-            <button key={index} style={styles.optionButton} onClick={() => handleAnswer(index)}>
-              {option}
-            </button>
-          ))}
-        </div>
+
+      <div style={styles.questionsContainer}>
+        {questions.map((q, index) => (
+          <div key={q.id} style={styles.questionCard}>
+            <p style={styles.questionNumber}>Question {index + 1}</p>
+            <p style={styles.questionText}>{q.text}</p>
+            <div style={styles.optionsGrid}>
+              {q.options.map((option, optIndex) => (
+                <button
+                  key={optIndex}
+                  style={{
+                    ...styles.optionButton,
+                    background: answers[q.id] === q.scores[optIndex] ? '#a855f7' : 'rgba(255, 255, 255, 0.1)'
+                  }}
+                  onClick={() => handleAnswerChange(q.id, q.scores[optIndex])}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
+
+      <button style={styles.submitButton} onClick={handleSubmit}>
+        Next Module →
+      </button>
     </div>
   );
 }
 
 const styles = {
-  container: { maxWidth: '800px', margin: '2rem auto', padding: '2rem', position: 'relative' },
-  header: { marginBottom: '2rem' },
-  module: { color: '#a855f7', fontSize: '0.9rem', fontWeight: '600' },
-  title: { fontSize: '2rem', marginBottom: '1rem', color: 'white' },
-  progressBar: { height: '4px', background: '#2a2a3a', borderRadius: '2px', marginBottom: '0.5rem' },
-  progress: { height: '100%', background: '#a855f7', borderRadius: '2px' },
-  counter: { color: '#aaa', fontSize: '0.9rem' },
-  card: { background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(10px)', padding: '2rem', borderRadius: '20px', border: '1px solid rgba(255, 255, 255, 0.1)' },
-  question: { fontSize: '1.2rem', marginBottom: '2rem', lineHeight: '1.6', color: 'white' },
-  options: { display: 'flex', flexDirection: 'column', gap: '1rem' },
-  optionButton: { padding: '1rem', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)', borderRadius: '10px', color: 'white', fontSize: '1rem', cursor: 'pointer', textAlign: 'left' }
+  container: {
+    maxWidth: '900px',
+    margin: '2rem auto',
+    padding: '2rem',
+    position: 'relative'
+  },
+  header: {
+    marginBottom: '2rem',
+    textAlign: 'center'
+  },
+  module: {
+    color: '#a855f7',
+    fontSize: '0.9rem',
+    fontWeight: '600'
+  },
+  title: {
+    fontSize: '2rem',
+    marginBottom: '0.5rem',
+    color: 'white'
+  },
+  instruction: {
+    color: '#aaa',
+    fontSize: '0.9rem'
+  },
+  questionsContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1.5rem',
+    marginBottom: '2rem'
+  },
+  questionCard: {
+    background: 'rgba(255, 255, 255, 0.05)',
+    backdropFilter: 'blur(10px)',
+    padding: '1.5rem',
+    borderRadius: '15px',
+    border: '1px solid rgba(255, 255, 255, 0.1)'
+  },
+  questionNumber: {
+    color: '#a855f7',
+    fontSize: '0.8rem',
+    marginBottom: '0.5rem'
+  },
+  questionText: {
+    fontSize: '1rem',
+    color: 'white',
+    marginBottom: '1rem',
+    lineHeight: '1.5'
+  },
+  optionsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(5, 1fr)',
+    gap: '0.5rem'
+  },
+  optionButton: {
+    padding: '0.6rem',
+    background: 'rgba(255, 255, 255, 0.1)',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+    borderRadius: '8px',
+    color: 'white',
+    fontSize: '0.7rem',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease'
+  },
+  submitButton: {
+    width: '100%',
+    padding: '1rem',
+    background: 'linear-gradient(135deg, #a855f7, #4f46e5)',
+    color: 'white',
+    border: 'none',
+    borderRadius: '10px',
+    fontSize: '1rem',
+    fontWeight: '600',
+    cursor: 'pointer',
+    marginTop: '1rem'
+  }
 };
 
 export default Module3_Personality;

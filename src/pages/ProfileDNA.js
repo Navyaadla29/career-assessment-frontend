@@ -62,10 +62,38 @@ function ProfileDNA() {
             value={formData.qualification}
             onChange={handleChange}
           >
-            <option value="">Select</option>
-            <option value="10th">10th Grade</option>
-            <option value="12th">12th Grade</option>
-            <option value="college">College</option>
+            <option value="">Select Qualification</option>
+            <optgroup label="School Level">
+              <option value="8th">8th Grade</option>
+              <option value="9th">9th Grade</option>
+              <option value="10th">10th Grade</option>
+              <option value="11th">11th Grade</option>
+              <option value="12th">12th Grade</option>
+            </optgroup>
+            <optgroup label="Undergraduate Degree">
+              <option value="btech">B.Tech / B.E.</option>
+              <option value="bsc">B.Sc</option>
+              <option value="bcom">B.Com</option>
+              <option value="ba">B.A</option>
+              <option value="bba">BBA</option>
+              <option value="bca">BCA</option>
+            </optgroup>
+            <optgroup label="Diploma">
+              <option value="diploma-engineering">Diploma in Engineering</option>
+              <option value="diploma-computer">Diploma in Computer Science</option>
+              <option value="diploma-electrical">Diploma in Electrical</option>
+              <option value="diploma-mechanical">Diploma in Mechanical</option>
+              <option value="diploma-civil">Diploma in Civil</option>
+              <option value="diploma-others">Other Diploma</option>
+            </optgroup>
+            <optgroup label="Post Graduate">
+              <option value="mtech">M.Tech / M.E.</option>
+              <option value="msc">M.Sc</option>
+              <option value="mcom">M.Com</option>
+              <option value="ma">M.A</option>
+              <option value="mba">MBA</option>
+              <option value="mca">MCA</option>
+            </optgroup>
           </select>
         </div>
 
@@ -94,15 +122,18 @@ const styles = {
     maxWidth: '800px',
     margin: '2rem auto',
     padding: '2rem',
-    background: '#1e1e2f',
-    borderRadius: '20px'
+    background: 'rgba(30, 30, 47, 0.95)',
+    borderRadius: '20px',
+    backdropFilter: 'blur(10px)',
+    border: '1px solid rgba(255, 255, 255, 0.1)'
   },
   header: {
     marginBottom: '2rem'
   },
   title: {
     fontSize: '2rem',
-    marginBottom: '0.5rem'
+    marginBottom: '0.5rem',
+    color: 'white'
   },
   subtitle: {
     color: '#aaa',
@@ -165,7 +196,8 @@ const styles = {
     borderRadius: '10px',
     fontSize: '1rem',
     fontWeight: '600',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    transition: 'all 0.3s ease'
   }
 };
 

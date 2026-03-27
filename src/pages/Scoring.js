@@ -16,8 +16,8 @@ function Scoring() {
   if (loading) {
     return (
       <div style={styles.loadingContainer}>
-        <div className="loader"></div>
-        <p>Calculating your scores...</p>
+        <div className="loader" style={styles.loader}></div>
+        <p style={styles.loadingText}>Calculating your scores...</p>
       </div>
     );
   }
@@ -42,7 +42,7 @@ function Scoring() {
           <div key={index} style={styles.scoreCard}>
             <div style={styles.scoreHeader}>
               <div style={styles.scoreIcon}>{item.icon}</div>
-              <div>
+              <div style={styles.scoreInfo}>
                 <span style={styles.category}>{item.category}</span>
                 <span style={styles.scoreValue}>{item.score}/100</span>
               </div>
@@ -87,8 +87,20 @@ const styles = {
   },
   loadingContainer: {
     textAlign: 'center',
-    marginTop: '4rem',
-    color: 'white'
+    marginTop: '4rem'
+  },
+  loader: {
+    width: '50px',
+    height: '50px',
+    border: '3px solid rgba(168,85,247,0.3)',
+    borderTop: '3px solid #a855f7',
+    borderRadius: '50%',
+    animation: 'spin 1s linear infinite',
+    margin: '0 auto'
+  },
+  loadingText: {
+    color: 'white',
+    marginTop: '1rem'
   },
   header: {
     marginBottom: '3rem',
@@ -132,16 +144,20 @@ const styles = {
   scoreIcon: {
     fontSize: '2rem'
   },
+  scoreInfo: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
   category: {
     fontSize: '1.1rem',
-    color: 'white',
-    display: 'block'
+    color: 'white'
   },
   scoreValue: {
-    fontSize: '1rem',
+    fontSize: '1.1rem',
     fontWeight: '600',
-    color: '#a855f7',
-    marginLeft: '1rem'
+    color: '#a855f7'
   },
   scoreBar: {
     height: '10px',

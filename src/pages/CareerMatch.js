@@ -17,8 +17,8 @@ function CareerMatch() {
   if (loading) {
     return (
       <div style={styles.loadingContainer}>
-        <div className="loader"></div>
-        <p>Finding your perfect career match...</p>
+        <div className="loader" style={styles.loader}></div>
+        <p style={styles.loadingText}>Finding your perfect career match...</p>
       </div>
     );
   }
@@ -70,11 +70,24 @@ const styles = {
   },
   loadingContainer: {
     textAlign: 'center',
-    marginTop: '4rem',
-    color: 'white'
+    marginTop: '4rem'
+  },
+  loader: {
+    width: '50px',
+    height: '50px',
+    border: '3px solid rgba(168,85,247,0.3)',
+    borderTop: '3px solid #a855f7',
+    borderRadius: '50%',
+    animation: 'spin 1s linear infinite',
+    margin: '0 auto'
+  },
+  loadingText: {
+    color: 'white',
+    marginTop: '1rem'
   },
   header: {
-    marginBottom: '3rem'
+    marginBottom: '3rem',
+    textAlign: 'center'
   },
   step: {
     color: '#a855f7',
