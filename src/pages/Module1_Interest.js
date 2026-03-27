@@ -9,7 +9,7 @@ function Module1_Interest() {
   const questions = [
     { id: 1, text: "I enjoy solving complex mathematical equations and logical puzzles.", options: [1, 2, 3, 4, 5], labels: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
     { id: 2, text: "I love designing graphic art, user interfaces, or painting.", options: [1, 2, 3, 4, 5], labels: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
-    { id: 3, text: "I find researching scientific phenomena and conducting experiments fascinating.", options: [1,  , 3, 4, 5], labels: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
+    { id: 3, text: "I find researching scientific phenomena and conducting experiments fascinating.", options: [1, 2, 3, 4, 5], labels: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
     { id: 4, text: "I enjoy writing stories, articles, or creating content.", options: [1, 2, 3, 4, 5], labels: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] },
     { id: 5, text: "I like building or fixing mechanical things and understanding how they work.", options: [1, 2, 3, 4, 5], labels: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"] }
   ];
@@ -19,7 +19,6 @@ function Module1_Interest() {
   };
 
   const handleSubmit = () => {
-    // Check if all questions are answered
     if (Object.keys(answers).length !== questions.length) {
       alert('Please answer all questions before proceeding.');
       return;
