@@ -17,12 +17,13 @@ function Module2_Aptitude() {
   const handleAnswerChange = (questionId, selectedOption) => {
     const question = questions.find(q => q.id === questionId);
     const isCorrect = selectedOption === question.correct;
-    setAnswers({ ...answers, [questionId]: isCorrect ? 5 : 0 });
+    // Store ONLY this question's answer without affecting others
+    setAnswers(prev => ({ ...prev, [questionId]: isCorrect ? 5 : 0 }));
   };
 
   const handleSubmit = () => {
     if (Object.keys(answers).length !== questions.length) {
-      alert('Please answer all questions before proceeding.');
+      alert('Please answer all 5 questions before proceeding.');
       return;
     }
     localStorage.setItem('module2', JSON.stringify(answers));
@@ -44,21 +45,24 @@ function Module2_Aptitude() {
             <p style={styles.questionNumber}>Question {index + 1}</p>
             <p style={styles.questionText}>{q.text}</p>
             <div style={styles.optionsGrid}>
-              {q.options.map((option, optIndex) => (
-                <button
-                  key={optIndex}
-                  style={{
-                    ...styles.optionButton,
-                    background: answers[q.id] !== undefined && 
-                              ((answers[q.id] === 5 && option === q.correct) || 
-                               (answers[q.id] === 0 && option !== q.correct)) 
-                              ? '#a855f7' : 'rgba(255, 255, 255, 0.1)'
-                  }}
-                  onClick={() => handleAnswerChange(q.id, option)}
-                >
-                  {option}
-                </button>
-              ))}
+              {q.options.map((option, optIndex) => {
+                const isSelected = answers[q.id] !== undefined && 
+                  ((answers[q.id] === 5 && option === q.correct) || 
+                   (answers[q.id] === 0 && option !== q.correct));
+                return (
+                  <button
+                    key={optIndex}
+                    style={{
+                      ...styles.optionButton,
+                      background: isSelected ? '#a855f7' : 'rgba(255, 255, 255, 0.1)',
+                      border: isSelected ? '1px solid #a855f7' : '1px solid rgba(255, 255, 255, 0.2)'
+                    }}
+                    onClick={() => handleAnswerChange(q.id, option)}
+                  >
+                    {option}
+                  </button>
+                );
+              })}
             </div>
           </div>
         ))}
@@ -72,81 +76,18 @@ function Module2_Aptitude() {
 }
 
 const styles = {
-  container: {
-    maxWidth: '900px',
-    margin: '2rem auto',
-    padding: '2rem',
-    position: 'relative'
-  },
-  header: {
-    marginBottom: '2rem',
-    textAlign: 'center'
-  },
-  module: {
-    color: '#a855f7',
-    fontSize: '0.9rem',
-    fontWeight: '600'
-  },
-  title: {
-    fontSize: '2rem',
-    marginBottom: '0.5rem',
-    color: 'white'
-  },
-  instruction: {
-    color: '#aaa',
-    fontSize: '0.9rem'
-  },
-  questionsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1.5rem',
-    marginBottom: '2rem'
-  },
-  questionCard: {
-    background: 'rgba(255, 255, 255, 0.05)',
-    backdropFilter: 'blur(10px)',
-    padding: '1.5rem',
-    borderRadius: '15px',
-    border: '1px solid rgba(255, 255, 255, 0.1)'
-  },
-  questionNumber: {
-    color: '#a855f7',
-    fontSize: '0.8rem',
-    marginBottom: '0.5rem'
-  },
-  questionText: {
-    fontSize: '1rem',
-    color: 'white',
-    marginBottom: '1rem',
-    lineHeight: '1.5'
-  },
-  optionsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gap: '0.5rem'
-  },
-  optionButton: {
-    padding: '0.75rem',
-    background: 'rgba(255, 255, 255, 0.1)',
-    border: '1px solid rgba(255, 255, 255, 0.2)',
-    borderRadius: '8px',
-    color: 'white',
-    fontSize: '0.9rem',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease'
-  },
-  submitButton: {
-    width: '100%',
-    padding: '1rem',
-    background: 'linear-gradient(135deg, #a855f7, #4f46e5)',
-    color: 'white',
-    border: 'none',
-    borderRadius: '10px',
-    fontSize: '1rem',
-    fontWeight: '600',
-    cursor: 'pointer',
-    marginTop: '1rem'
-  }
+  container: { maxWidth: '900px', margin: '2rem auto', padding: '2rem', position: 'relative' },
+  header: { marginBottom: '2rem', textAlign: 'center' },
+  module: { color: '#a855f7', fontSize: '0.9rem', fontWeight: '600' },
+  title: { fontSize: '2rem', marginBottom: '0.5rem', color: 'white' },
+  instruction: { color: '#aaa', fontSize: '0.9rem' },
+  questionsContainer: { display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '2rem' },
+  questionCard: { background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(10px)', padding: '1.5rem', borderRadius: '15px', border: '1px solid rgba(255, 255, 255, 0.1)' },
+  questionNumber: { color: '#a855f7', fontSize: '0.8rem', marginBottom: '0.5rem' },
+  questionText: { fontSize: '1rem', color: 'white', marginBottom: '1rem', lineHeight: '1.5' },
+  optionsGrid: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' },
+  optionButton: { padding: '0.75rem', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)', borderRadius: '8px', color: 'white', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease' },
+  submitButton: { width: '100%', padding: '1rem', background: 'linear-gradient(135deg, #a855f7, #4f46e5)', color: 'white', border: 'none', borderRadius: '10px', fontSize: '1rem', fontWeight: '600', cursor: 'pointer', marginTop: '1rem' }
 };
 
 export default Module2_Aptitude;

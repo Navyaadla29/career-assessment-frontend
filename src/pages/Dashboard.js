@@ -42,7 +42,10 @@ function Dashboard() {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>Your Career Dashboard</h1>
+      <div style={styles.header}>
+        <span style={styles.step}>STEP 8 OF 8</span>
+        <h1 style={styles.title}>Interactive Career Dashboard</h1>
+      </div>
       <p style={styles.subtitle}>Personalized insights based on your assessment answers</p>
 
       {/* Top Career Match Card */}
@@ -86,26 +89,29 @@ function Dashboard() {
         {scores.creativity >= 70 && <span style={styles.skillTag}>✅ Creative Expression (Strengthened)</span>}
       </div>
 
-      {/* 5-Year Roadmap */}
-      <h3 style={styles.sectionTitle}>Your 5-Year Action Plan</h3>
-      <div style={styles.roadmapContainer}>
-        {roadmap.map((item, idx) => (
-          <div key={idx} style={styles.roadmapItem}>
-            <div style={styles.roadmapYear}>{item.year}</div>
-            <ul style={styles.roadmapList}>
-              {item.tasks.map((task, tIdx) => (
-                <li key={tIdx} style={styles.roadmapTask}>{task}</li>
+      {/* 5-Year Roadmap Preview */}
+      <h3 style={styles.sectionTitle}>Your 5-Year Action Plan Preview</h3>
+      <div style={styles.roadmapPreview}>
+        {roadmap.slice(0, 3).map((item, idx) => (
+          <div key={idx} style={styles.roadmapItemPreview}>
+            <div style={styles.roadmapYearPreview}>{item.year}</div>
+            <ul style={styles.roadmapListPreview}>
+              {item.tasks.slice(0, 2).map((task, tIdx) => (
+                <li key={tIdx} style={styles.roadmapTaskPreview}>{task}</li>
               ))}
             </ul>
           </div>
         ))}
       </div>
+      <button onClick={() => navigate('/roadmap')} style={styles.viewRoadmapButton}>
+        View Full 5-Year Roadmap →
+      </button>
 
-      {/* Alternate Careers */}
-      <h3 style={styles.sectionTitle}>Alternate Career Paths</h3>
+      {/* Alternate Careers - FIXED WITH 3 CARDS */}
+      <h3 style={styles.sectionTitle}>Alternative Career Paths</h3>
       <div style={styles.alternateContainer}>
         <div style={styles.alternateCard}>
-          <span style={styles.alternateIcon}>💻</span>
+          <span style={styles.alternateIcon}>📊</span>
           <div>
             <div style={styles.alternateTitle}>Data Analyst</div>
             <div style={styles.alternateDesc}>Use data to drive business decisions</div>
@@ -145,8 +151,19 @@ const styles = {
     marginTop: '4rem',
     color: 'white'
   },
+  header: {
+    marginBottom: '1rem',
+    textAlign: 'center'
+  },
+  step: {
+    color: '#a855f7',
+    fontSize: '0.9rem',
+    fontWeight: '600',
+    display: 'block',
+    marginBottom: '0.5rem'
+  },
   title: {
-    fontSize: '2.5rem',
+    fontSize: '2rem',
     textAlign: 'center',
     color: 'white',
     marginBottom: '0.5rem'
@@ -264,29 +281,42 @@ const styles = {
     color: '#a855f7',
     fontSize: '0.9rem'
   },
-  roadmapContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.8rem',
+  roadmapPreview: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: '1rem',
     marginBottom: '1rem'
   },
-  roadmapItem: {
-    background: 'rgba(255, 255, 255, 0.03)',
+  roadmapItemPreview: {
+    background: 'rgba(255, 255, 255, 0.05)',
     borderRadius: '12px',
     padding: '1rem'
   },
-  roadmapYear: {
+  roadmapYearPreview: {
     color: '#a855f7',
     fontWeight: 'bold',
-    marginBottom: '0.5rem'
+    marginBottom: '0.5rem',
+    fontSize: '0.9rem'
   },
-  roadmapList: {
-    marginLeft: '1.5rem',
+  roadmapListPreview: {
+    marginLeft: '1rem',
     color: '#ccc'
   },
-  roadmapTask: {
-    marginBottom: '0.3rem',
-    fontSize: '0.9rem'
+  roadmapTaskPreview: {
+    fontSize: '0.8rem',
+    marginBottom: '0.3rem'
+  },
+  viewRoadmapButton: {
+    width: '100%',
+    padding: '0.8rem',
+    background: 'rgba(168,85,247,0.2)',
+    color: '#a855f7',
+    border: '1px solid rgba(168,85,247,0.3)',
+    borderRadius: '10px',
+    fontSize: '0.9rem',
+    fontWeight: '600',
+    cursor: 'pointer',
+    marginBottom: '1rem'
   },
   alternateContainer: {
     display: 'grid',
@@ -324,7 +354,7 @@ const styles = {
     fontSize: '1rem',
     fontWeight: '600',
     cursor: 'pointer',
-    marginTop: '2rem'
+    marginTop: '1rem'
   }
 };
 
