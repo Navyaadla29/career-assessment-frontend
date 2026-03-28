@@ -3,7 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 
 function Navbar() {
   const location = useLocation();
-  const steps = [
+
+  const navLinks = [
     { path: '/', name: 'Home' },
     { path: '/profile', name: 'Profile' },
     { path: '/personal-dna', name: 'Personal' },
@@ -15,52 +16,46 @@ function Navbar() {
     { path: '/dashboard', name: 'Dashboard' }
   ];
 
-  const currentStep = steps.findIndex(step => step.path === location.pathname);
-
   return (
-    <>
-      <nav style={styles.nav}>
-        <div style={styles.container}>
-          <Link to="/" style={styles.logo}>Career<span style={styles.logoHighlight}>Assessment</span></Link>
-          <div style={styles.steps}>
-            <span style={styles.stepText}>STEP {currentStep + 1} OF 8</span>
-            <div style={styles.progressBar}>
-              <div style={{...styles.progress, width: `${((currentStep + 1)/8)*100}%`}}></div>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div style={styles.subNav}>
-        {steps.slice(1).map((step, index) => (
-          <Link 
-            key={index} 
-            to={step.path}
-            style={{
-              ...styles.subNavLink,
-              color: location.pathname === step.path ? '#4f46e5' : '#888',
-              borderBottom: location.pathname === step.path ? '2px solid #4f46e5' : 'none'
-            }}
-          >
-            {step.name}
-          </Link>
-        ))}
+    <nav style={styles.nav}>
+      <div style={styles.container}>
+        <Link to="/" style={styles.logo}>
+          Career<span style={styles.logoHighlight}>Assessment</span>
+        </Link>
+        <ul style={styles.navMenu}>
+          {navLinks.map((link, index) => (
+            <li key={index}>
+              <Link
+                to={link.path}
+                style={{
+                  ...styles.navLink,
+                  color: location.pathname === link.path ? '#a855f7' : '#aaa'
+                }}
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
-    </>
+    </nav>
   );
 }
 
 const styles = {
   nav: {
-    background: '#1e1e2f',
+    background: 'rgba(0, 0, 0, 0.8)',
+    backdropFilter: 'blur(10px)',
     padding: '1rem 2rem',
-    borderBottom: '1px solid #333'
+    borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
   },
   container: {
     maxWidth: '1200px',
     margin: '0 auto',
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexWrap: 'wrap'
   },
   logo: {
     fontSize: '1.5rem',
@@ -69,40 +64,18 @@ const styles = {
     textDecoration: 'none'
   },
   logoHighlight: {
-    color: '#4f46e5'
+    color: '#a855f7'
   },
-  steps: {
+  navMenu: {
     display: 'flex',
-    alignItems: 'center',
-    gap: '1rem'
+    listStyle: 'none',
+    gap: '1.5rem',
+    flexWrap: 'wrap'
   },
-  stepText: {
-    color: '#888',
-    fontSize: '0.9rem'
-  },
-  progressBar: {
-    width: '100px',
-    height: '4px',
-    background: '#333',
-    borderRadius: '2px'
-  },
-  progress: {
-    height: '100%',
-    background: '#4f46e5',
-    borderRadius: '2px'
-  },
-  subNav: {
-    background: '#1a1a2e',
-    padding: '0.5rem 2rem',
-    display: 'flex',
-    gap: '2rem',
-    justifyContent: 'center',
-    borderBottom: '1px solid #333'
-  },
-  subNavLink: {
+  navLink: {
     textDecoration: 'none',
     fontSize: '0.9rem',
-    padding: '0.5rem 0'
+    transition: 'color 0.3s ease'
   }
 };
 
