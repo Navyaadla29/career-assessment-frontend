@@ -32,12 +32,10 @@ function Dashboard() {
     { name: 'Leadership & People', value: scores.leadership, icon: '👥', color: '#10b981' }
   ];
 
-  const roadmap = [
-    { year: 'Year 1', tasks: ['Complete 11th & 12th with focus on core subjects', 'Build foundational knowledge in your area of interest'] },
-    { year: 'Year 2', tasks: ['Score well in board exams', 'Prepare for entrance exams (JEE/NEET/CLAT etc.)', 'Participate in relevant competitions'] },
-    { year: 'Year 3', tasks: ['Start undergraduate degree in chosen field', 'Take internships and gain practical experience', 'Build network with professionals'] },
-    { year: 'Year 4', tasks: ['Focus on specialization', 'Work on real-world projects', 'Prepare for placements or higher studies'] },
-    { year: 'Year 5', tasks: ['Complete degree with good grades', 'Secure job or admission in master\'s program', 'Begin professional career'] }
+  const alternateCareers = [
+    { icon: '📊', title: 'Data Analyst', desc: 'Use data to drive business decisions' },
+    { icon: '🎨', title: 'UX Designer', desc: 'Create intuitive user experiences' },
+    { icon: '📈', title: 'Business Consultant', desc: 'Help organizations improve performance' }
   ];
 
   return (
@@ -89,48 +87,27 @@ function Dashboard() {
         {scores.creativity >= 70 && <span style={styles.skillTag}>✅ Creative Expression (Strengthened)</span>}
       </div>
 
-      {/* 5-Year Roadmap Preview */}
-      <h3 style={styles.sectionTitle}>Your 5-Year Action Plan Preview</h3>
-      <div style={styles.roadmapPreview}>
-        {roadmap.slice(0, 3).map((item, idx) => (
-          <div key={idx} style={styles.roadmapItemPreview}>
-            <div style={styles.roadmapYearPreview}>{item.year}</div>
-            <ul style={styles.roadmapListPreview}>
-              {item.tasks.slice(0, 2).map((task, tIdx) => (
-                <li key={tIdx} style={styles.roadmapTaskPreview}>{task}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
+      {/* Roadmap Button */}
+      <div style={styles.roadmapBox}>
+        <h3 style={styles.sectionTitle}>Your 5-Year Action Plan</h3>
+        <p style={styles.roadmapPreview}>Get a detailed year-by-year roadmap to achieve your career goals</p>
+        <button onClick={() => navigate('/roadmap')} style={styles.roadmapButton}>
+          View Full Roadmap →
+        </button>
       </div>
-      <button onClick={() => navigate('/roadmap')} style={styles.viewRoadmapButton}>
-        View Full 5-Year Roadmap →
-      </button>
 
-      {/* Alternate Careers - FIXED WITH 3 CARDS */}
+      {/* Alternate Careers - 3 Cards */}
       <h3 style={styles.sectionTitle}>Alternative Career Paths</h3>
       <div style={styles.alternateContainer}>
-        <div style={styles.alternateCard}>
-          <span style={styles.alternateIcon}>📊</span>
-          <div>
-            <div style={styles.alternateTitle}>Data Analyst</div>
-            <div style={styles.alternateDesc}>Use data to drive business decisions</div>
+        {alternateCareers.map((item, idx) => (
+          <div key={idx} style={styles.alternateCard}>
+            <span style={styles.alternateIcon}>{item.icon}</span>
+            <div>
+              <div style={styles.alternateTitle}>{item.title}</div>
+              <div style={styles.alternateDesc}>{item.desc}</div>
+            </div>
           </div>
-        </div>
-        <div style={styles.alternateCard}>
-          <span style={styles.alternateIcon}>🎨</span>
-          <div>
-            <div style={styles.alternateTitle}>UX Designer</div>
-            <div style={styles.alternateDesc}>Create intuitive user experiences</div>
-          </div>
-        </div>
-        <div style={styles.alternateCard}>
-          <span style={styles.alternateIcon}>📈</span>
-          <div>
-            <div style={styles.alternateTitle}>Business Consultant</div>
-            <div style={styles.alternateDesc}>Help organizations improve performance</div>
-          </div>
-        </div>
+        ))}
       </div>
 
       <button onClick={() => navigate('/profile')} style={styles.button}>
@@ -141,221 +118,41 @@ function Dashboard() {
 }
 
 const styles = {
-  container: {
-    maxWidth: '1000px',
-    margin: '2rem auto',
-    padding: '2rem'
-  },
-  loadingContainer: {
-    textAlign: 'center',
-    marginTop: '4rem',
-    color: 'white'
-  },
-  header: {
-    marginBottom: '1rem',
-    textAlign: 'center'
-  },
-  step: {
-    color: '#a855f7',
-    fontSize: '0.9rem',
-    fontWeight: '600',
-    display: 'block',
-    marginBottom: '0.5rem'
-  },
-  title: {
-    fontSize: '2rem',
-    textAlign: 'center',
-    color: 'white',
-    marginBottom: '0.5rem'
-  },
-  subtitle: {
-    textAlign: 'center',
-    color: '#aaa',
-    marginBottom: '2rem'
-  },
-  matchCard: {
-    background: 'rgba(255, 255, 255, 0.08)',
-    borderRadius: '20px',
-    padding: '2rem',
-    textAlign: 'center',
-    marginBottom: '2rem',
-    border: '1px solid rgba(168,85,247,0.3)'
-  },
-  matchBadge: {
-    color: '#a855f7',
-    fontSize: '0.8rem',
-    fontWeight: '600',
-    marginBottom: '0.5rem'
-  },
-  careerName: {
-    fontSize: '2rem',
-    color: 'white',
-    marginBottom: '1rem'
-  },
-  matchPercentage: {
-    marginBottom: '1rem'
-  },
-  percentageNumber: {
-    fontSize: '3rem',
-    fontWeight: 'bold',
-    color: '#a855f7'
-  },
-  percentageLabel: {
-    fontSize: '0.9rem',
-    color: '#aaa',
-    marginLeft: '0.5rem'
-  },
-  industryTag: {
-    display: 'inline-block',
-    padding: '0.3rem 1rem',
-    background: 'rgba(168,85,247,0.2)',
-    borderRadius: '20px',
-    color: '#a855f7',
-    fontSize: '0.8rem',
-    marginBottom: '0.5rem'
-  },
-  growthTag: {
-    color: '#10b981',
-    fontSize: '0.9rem',
-    marginBottom: '1rem'
-  },
-  description: {
-    color: '#ccc',
-    lineHeight: '1.6'
-  },
-  sectionTitle: {
-    fontSize: '1.3rem',
-    color: 'white',
-    marginBottom: '1rem',
-    marginTop: '2rem'
-  },
-  scoreGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    gap: '1rem',
-    marginBottom: '1rem'
-  },
-  scoreCard: {
-    background: 'rgba(255, 255, 255, 0.05)',
-    borderRadius: '12px',
-    padding: '1rem',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem'
-  },
-  scoreIcon: {
-    fontSize: '2rem'
-  },
-  scoreInfo: {
-    flex: 1
-  },
-  scoreName: {
-    color: '#aaa',
-    fontSize: '0.8rem'
-  },
-  scoreValue: {
-    color: 'white',
-    fontSize: '1.2rem',
-    fontWeight: 'bold'
-  },
-  scoreBar: {
-    height: '6px',
-    background: 'rgba(255,255,255,0.1)',
-    borderRadius: '3px',
-    marginTop: '0.3rem'
-  },
-  scoreFill: {
-    height: '100%',
-    borderRadius: '3px'
-  },
-  skillsContainer: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '0.8rem',
-    marginBottom: '1rem'
-  },
-  skillTag: {
-    padding: '0.5rem 1rem',
-    background: 'rgba(168,85,247,0.2)',
-    borderRadius: '20px',
-    color: '#a855f7',
-    fontSize: '0.9rem'
-  },
-  roadmapPreview: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gap: '1rem',
-    marginBottom: '1rem'
-  },
-  roadmapItemPreview: {
-    background: 'rgba(255, 255, 255, 0.05)',
-    borderRadius: '12px',
-    padding: '1rem'
-  },
-  roadmapYearPreview: {
-    color: '#a855f7',
-    fontWeight: 'bold',
-    marginBottom: '0.5rem',
-    fontSize: '0.9rem'
-  },
-  roadmapListPreview: {
-    marginLeft: '1rem',
-    color: '#ccc'
-  },
-  roadmapTaskPreview: {
-    fontSize: '0.8rem',
-    marginBottom: '0.3rem'
-  },
-  viewRoadmapButton: {
-    width: '100%',
-    padding: '0.8rem',
-    background: 'rgba(168,85,247,0.2)',
-    color: '#a855f7',
-    border: '1px solid rgba(168,85,247,0.3)',
-    borderRadius: '10px',
-    fontSize: '0.9rem',
-    fontWeight: '600',
-    cursor: 'pointer',
-    marginBottom: '1rem'
-  },
-  alternateContainer: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gap: '1rem',
-    marginBottom: '2rem'
-  },
-  alternateCard: {
-    background: 'rgba(255, 255, 255, 0.05)',
-    borderRadius: '12px',
-    padding: '1rem',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.8rem'
-  },
-  alternateIcon: {
-    fontSize: '1.5rem'
-  },
-  alternateTitle: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: '0.9rem'
-  },
-  alternateDesc: {
-    color: '#aaa',
-    fontSize: '0.7rem'
-  },
-  button: {
-    width: '100%',
-    padding: '1rem',
-    background: 'linear-gradient(135deg, #a855f7, #4f46e5)',
-    color: 'white',
-    border: 'none',
-    borderRadius: '10px',
-    fontSize: '1rem',
-    fontWeight: '600',
-    cursor: 'pointer',
-    marginTop: '1rem'
-  }
+  container: { maxWidth: '1000px', margin: '2rem auto', padding: '2rem' },
+  loadingContainer: { textAlign: 'center', marginTop: '4rem', color: 'white' },
+  header: { marginBottom: '1rem', textAlign: 'center' },
+  step: { color: '#a855f7', fontSize: '0.9rem', fontWeight: '600', display: 'block', marginBottom: '0.5rem' },
+  title: { fontSize: '2rem', textAlign: 'center', color: 'white', marginBottom: '0.5rem' },
+  subtitle: { textAlign: 'center', color: '#aaa', marginBottom: '2rem' },
+  matchCard: { background: 'rgba(255, 255, 255, 0.08)', borderRadius: '20px', padding: '2rem', textAlign: 'center', marginBottom: '2rem', border: '1px solid rgba(168,85,247,0.3)' },
+  matchBadge: { color: '#a855f7', fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.5rem' },
+  careerName: { fontSize: '2rem', color: 'white', marginBottom: '1rem' },
+  matchPercentage: { marginBottom: '1rem' },
+  percentageNumber: { fontSize: '3rem', fontWeight: 'bold', color: '#a855f7' },
+  percentageLabel: { fontSize: '0.9rem', color: '#aaa', marginLeft: '0.5rem' },
+  industryTag: { display: 'inline-block', padding: '0.3rem 1rem', background: 'rgba(168,85,247,0.2)', borderRadius: '20px', color: '#a855f7', fontSize: '0.8rem', marginBottom: '0.5rem' },
+  growthTag: { color: '#10b981', fontSize: '0.9rem', marginBottom: '1rem' },
+  description: { color: '#ccc', lineHeight: '1.6' },
+  sectionTitle: { fontSize: '1.3rem', color: 'white', marginBottom: '1rem', marginTop: '2rem' },
+  scoreGrid: { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', marginBottom: '1rem' },
+  scoreCard: { background: 'rgba(255, 255, 255, 0.05)', borderRadius: '12px', padding: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' },
+  scoreIcon: { fontSize: '2rem' },
+  scoreInfo: { flex: 1 },
+  scoreName: { color: '#aaa', fontSize: '0.8rem' },
+  scoreValue: { color: 'white', fontSize: '1.2rem', fontWeight: 'bold' },
+  scoreBar: { height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', marginTop: '0.3rem' },
+  scoreFill: { height: '100%', borderRadius: '3px' },
+  skillsContainer: { display: 'flex', flexWrap: 'wrap', gap: '0.8rem', marginBottom: '1rem' },
+  skillTag: { padding: '0.5rem 1rem', background: 'rgba(168,85,247,0.2)', borderRadius: '20px', color: '#a855f7', fontSize: '0.9rem' },
+  roadmapBox: { background: 'rgba(255, 255, 255, 0.05)', borderRadius: '15px', padding: '1.5rem', marginBottom: '2rem', textAlign: 'center' },
+  roadmapPreview: { color: '#aaa', marginBottom: '1rem' },
+  roadmapButton: { padding: '0.8rem 2rem', background: 'rgba(168,85,247,0.2)', color: '#a855f7', border: '1px solid rgba(168,85,247,0.3)', borderRadius: '10px', fontSize: '0.9rem', fontWeight: '600', cursor: 'pointer' },
+  alternateContainer: { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '2rem' },
+  alternateCard: { background: 'rgba(255, 255, 255, 0.05)', borderRadius: '12px', padding: '1rem', display: 'flex', alignItems: 'center', gap: '0.8rem' },
+  alternateIcon: { fontSize: '1.5rem' },
+  alternateTitle: { color: 'white', fontWeight: 'bold', fontSize: '0.9rem' },
+  alternateDesc: { color: '#aaa', fontSize: '0.7rem' },
+  button: { width: '100%', padding: '1rem', background: 'linear-gradient(135deg, #a855f7, #4f46e5)', color: 'white', border: 'none', borderRadius: '10px', fontSize: '1rem', fontWeight: '600', cursor: 'pointer', marginTop: '1rem' }
 };
 
 export default Dashboard;
