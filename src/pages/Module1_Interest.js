@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Timer from '../components/Timer';
-import { saveAssessmentProgress, loadAssessmentProgress, hasSavedProgress, getResumeModule } from '../utils/saveProgress';
+import { saveAssessmentProgress, loadAssessmentProgress } from '../utils/saveProgress';
 
 function Module1_Interest() {
   const navigate = useNavigate();
