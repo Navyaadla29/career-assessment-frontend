@@ -180,100 +180,27 @@ const styles = {
   card: {
     maxWidth: '450px',
     width: '100%',
-    background: 'rgba(255, 255, 255, 0.05)',
+    background: 'rgba(255, 255, 255, 0.08)',
     backdropFilter: 'blur(12px)',
     borderRadius: '20px',
     padding: '2rem',
-    border: '1px solid rgba(255, 255, 255, 0.1)'
+    border: '1px solid rgba(255, 255, 255, 0.15)'
   },
-  logo: {
-    textAlign: 'center',
-    marginBottom: '2rem'
-  },
-  logoIcon: {
-    fontSize: '2rem',
-    display: 'block',
-    marginBottom: '0.5rem'
-  },
-  logoText: {
-    fontSize: '1.5rem',
-    color: 'white'
-  },
-  logoHighlight: {
-    color: '#a855f7'
-  },
-  tabs: {
-    display: 'flex',
-    gap: '1rem',
-    marginBottom: '2rem',
-    borderBottom: '1px solid rgba(255,255,255,0.1)',
-    paddingBottom: '0.5rem'
-  },
-  tab: {
-    flex: 1,
-    background: 'none',
-    border: 'none',
-    padding: '0.5rem',
-    fontSize: '1rem',
-    color: '#aaa',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease'
-  },
-  activeTab: {
-    color: '#a855f7',
-    borderBottom: '2px solid #a855f7'
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1rem'
-  },
-  inputGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.5rem'
-  },
-  label: {
-    color: '#aaa',
-    fontSize: '0.8rem'
-  },
-  input: {
-    padding: '0.75rem',
-    background: 'rgba(255, 255, 255, 0.1)',
-    border: '1px solid rgba(255, 255, 255, 0.2)',
-    borderRadius: '8px',
-    color: 'white',
-    fontSize: '1rem'
-  },
-  button: {
-    padding: '0.75rem',
-    background: 'linear-gradient(135deg, #a855f7, #4f46e5)',
-    color: 'white',
-    border: 'none',
-    borderRadius: '8px',
-    fontSize: '1rem',
-    fontWeight: '600',
-    cursor: 'pointer',
-    marginTop: '1rem'
-  },
-  error: {
-    color: '#f87171',
-    fontSize: '0.8rem',
-    textAlign: 'center'
-  },
-  footer: {
-    textAlign: 'center',
-    marginTop: '1.5rem',
-    color: '#aaa',
-    fontSize: '0.8rem'
-  },
-  switchButton: {
-    background: 'none',
-    border: 'none',
-    color: '#a855f7',
-    cursor: 'pointer',
-    fontSize: '0.8rem'
-  }
+  logo: { textAlign: 'center', marginBottom: '2rem' },
+  logoIcon: { fontSize: '2rem', display: 'block', marginBottom: '0.5rem' },
+  logoText: { fontSize: '1.5rem', color: 'white' },
+  logoHighlight: { color: '#a855f7' },
+  tabs: { display: 'flex', gap: '1rem', marginBottom: '2rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.5rem' },
+  tab: { flex: 1, background: 'none', border: 'none', padding: '0.5rem', fontSize: '1rem', color: '#aaa', cursor: 'pointer', transition: 'all 0.3s ease' },
+  activeTab: { color: '#a855f7', borderBottom: '2px solid #a855f7' },
+  form: { display: 'flex', flexDirection: 'column', gap: '1rem' },
+  inputGroup: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+  label: { color: '#aaa', fontSize: '0.8rem' },
+  input: { padding: '0.75rem', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)', borderRadius: '8px', color: 'white', fontSize: '1rem' },
+  button: { padding: '0.75rem', background: 'linear-gradient(135deg, #a855f7, #4f46e5)', color: 'white', border: 'none', borderRadius: '8px', fontSize: '1rem', fontWeight: '600', cursor: 'pointer', marginTop: '1rem' },
+  error: { color: '#f87171', fontSize: '0.8rem', textAlign: 'center' },
+  footer: { textAlign: 'center', marginTop: '1.5rem', color: '#aaa', fontSize: '0.8rem' },
+  switchButton: { background: 'none', border: 'none', color: '#a855f7', cursor: 'pointer', fontSize: '0.8rem' }
 };
 
 export default Login;
