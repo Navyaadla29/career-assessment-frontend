@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Timer from '../components/Timer';
+import { saveAssessmentProgress, loadAssessmentProgress } from '../utils/saveProgress';
 
 function Module5_WorkStyle() {
   const navigate = useNavigate();
   const [answers, setAnswers] = useState({});
+
+  useEffect(() => {
+    const savedProgress = loadAssessmentProgress('module5');
+    if (savedProgress && savedProgress.answers) {
+      setAnswers(savedProgress.answers);
+    }
+  }, []);
 
   const questions = [
     { id: 1, text: "How often do you take charge when a group project lacks direction?", options: ["Always", "Often", "Sometimes", "Rarely", "Never"], scores: [5,4,3,2,1] },
@@ -15,12 +23,14 @@ function Module5_WorkStyle() {
   ];
 
   const handleAnswerChange = (questionId, score) => {
-    setAnswers({ ...answers, [questionId]: score });
+    const newAnswers = { ...answers, [questionId]: score };
+    setAnswers(newAnswers);
+    saveAssessmentProgress('module5', newAnswers);
   };
 
   const handleSubmit = () => {
     if (Object.keys(answers).length !== questions.length) {
-      alert('Please answer all questions before proceeding.');
+      alert('Please answer all 5 questions before proceeding.');
       return;
     }
     localStorage.setItem('module5', JSON.stringify(answers));
@@ -34,6 +44,9 @@ function Module5_WorkStyle() {
         <span style={styles.module}>Module 5 of 7 | Work Style</span>
         <h2 style={styles.title}>Work Style Assessment</h2>
         <p style={styles.instruction}>Please answer all 5 questions below</p>
+        {Object.keys(answers).length > 0 && (
+          <p style={styles.progressText}>Progress: {Object.keys(answers).length}/5 questions answered</p>
+        )}
       </div>
 
       <div style={styles.questionsContainer}>
@@ -67,81 +80,19 @@ function Module5_WorkStyle() {
 }
 
 const styles = {
-  container: {
-    maxWidth: '900px',
-    margin: '2rem auto',
-    padding: '2rem',
-    position: 'relative'
-  },
-  header: {
-    marginBottom: '2rem',
-    textAlign: 'center'
-  },
-  module: {
-    color: '#a855f7',
-    fontSize: '0.9rem',
-    fontWeight: '600'
-  },
-  title: {
-    fontSize: '2rem',
-    marginBottom: '0.5rem',
-    color: 'white'
-  },
-  instruction: {
-    color: '#aaa',
-    fontSize: '0.9rem'
-  },
-  questionsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1.5rem',
-    marginBottom: '2rem'
-  },
-  questionCard: {
-    background: 'rgba(255, 255, 255, 0.05)',
-    backdropFilter: 'blur(10px)',
-    padding: '1.5rem',
-    borderRadius: '15px',
-    border: '1px solid rgba(255, 255, 255, 0.1)'
-  },
-  questionNumber: {
-    color: '#a855f7',
-    fontSize: '0.8rem',
-    marginBottom: '0.5rem'
-  },
-  questionText: {
-    fontSize: '1rem',
-    color: 'white',
-    marginBottom: '1rem',
-    lineHeight: '1.5'
-  },
-  optionsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(5, 1fr)',
-    gap: '0.5rem'
-  },
-  optionButton: {
-    padding: '0.6rem',
-    background: 'rgba(255, 255, 255, 0.1)',
-    border: '1px solid rgba(255, 255, 255, 0.2)',
-    borderRadius: '8px',
-    color: 'white',
-    fontSize: '0.7rem',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease'
-  },
-  submitButton: {
-    width: '100%',
-    padding: '1rem',
-    background: 'linear-gradient(135deg, #a855f7, #4f46e5)',
-    color: 'white',
-    border: 'none',
-    borderRadius: '10px',
-    fontSize: '1rem',
-    fontWeight: '600',
-    cursor: 'pointer',
-    marginTop: '1rem'
-  }
+  container: { maxWidth: '900px', margin: '2rem auto', padding: '2rem', position: 'relative' },
+  header: { marginBottom: '2rem', textAlign: 'center' },
+  module: { color: '#a855f7', fontSize: '0.9rem', fontWeight: '600' },
+  title: { fontSize: '2rem', marginBottom: '0.5rem', color: 'white' },
+  instruction: { color: '#aaa', fontSize: '0.9rem' },
+  progressText: { color: '#10b981', fontSize: '0.8rem', marginTop: '0.5rem' },
+  questionsContainer: { display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '2rem' },
+  questionCard: { background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(10px)', padding: '1.5rem', borderRadius: '15px' },
+  questionNumber: { color: '#a855f7', fontSize: '0.8rem', marginBottom: '0.5rem' },
+  questionText: { fontSize: '1rem', color: 'white', marginBottom: '1rem' },
+  optionsGrid: { display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0.5rem' },
+  optionButton: { padding: '0.6rem', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)', borderRadius: '8px', color: 'white', cursor: 'pointer' },
+  submitButton: { width: '100%', padding: '1rem', background: 'linear-gradient(135deg, #a855f7, #4f46e5)', color: 'white', border: 'none', borderRadius: '10px', fontSize: '1rem', fontWeight: '600', cursor: 'pointer', marginTop: '1rem' }
 };
 
 export default Module5_WorkStyle;

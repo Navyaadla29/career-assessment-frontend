@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Timer from '../components/Timer';
+import { saveAssessmentProgress, loadAssessmentProgress } from '../utils/saveProgress';
 
 function Module6_AcademicTrack() {
   const navigate = useNavigate();
   const [answers, setAnswers] = useState({});
+
+  useEffect(() => {
+    const savedProgress = loadAssessmentProgress('module6');
+    if (savedProgress && savedProgress.answers) {
+      setAnswers(savedProgress.answers);
+    }
+  }, []);
 
   const questions = [
     { id: 1, text: "In which cluster of subjects do you consistently achieve the highest grades?", options: ["Mathematics & Pure Sciences", "Humanities, History & Languages", "Accountancy, Economics & Business Studies", "Physical Education / Electives"], scores: [5,4,3,2] },
@@ -15,12 +23,14 @@ function Module6_AcademicTrack() {
   ];
 
   const handleAnswerChange = (questionId, score) => {
-    setAnswers({ ...answers, [questionId]: score });
+    const newAnswers = { ...answers, [questionId]: score };
+    setAnswers(newAnswers);
+    saveAssessmentProgress('module6', newAnswers);
   };
 
   const handleSubmit = () => {
     if (Object.keys(answers).length !== questions.length) {
-      alert('Please answer all questions before proceeding.');
+      alert('Please answer all 5 questions before proceeding.');
       return;
     }
     localStorage.setItem('module6', JSON.stringify(answers));
@@ -34,6 +44,9 @@ function Module6_AcademicTrack() {
         <span style={styles.module}>Module 6 of 7 | Academic Track</span>
         <h2 style={styles.title}>Academic Track Assessment</h2>
         <p style={styles.instruction}>Please answer all 5 questions below</p>
+        {Object.keys(answers).length > 0 && (
+          <p style={styles.progressText}>Progress: {Object.keys(answers).length}/5 questions answered</p>
+        )}
       </div>
 
       <div style={styles.questionsContainer}>
@@ -67,81 +80,19 @@ function Module6_AcademicTrack() {
 }
 
 const styles = {
-  container: {
-    maxWidth: '900px',
-    margin: '2rem auto',
-    padding: '2rem',
-    position: 'relative'
-  },
-  header: {
-    marginBottom: '2rem',
-    textAlign: 'center'
-  },
-  module: {
-    color: '#a855f7',
-    fontSize: '0.9rem',
-    fontWeight: '600'
-  },
-  title: {
-    fontSize: '2rem',
-    marginBottom: '0.5rem',
-    color: 'white'
-  },
-  instruction: {
-    color: '#aaa',
-    fontSize: '0.9rem'
-  },
-  questionsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1.5rem',
-    marginBottom: '2rem'
-  },
-  questionCard: {
-    background: 'rgba(255, 255, 255, 0.05)',
-    backdropFilter: 'blur(10px)',
-    padding: '1.5rem',
-    borderRadius: '15px',
-    border: '1px solid rgba(255, 255, 255, 0.1)'
-  },
-  questionNumber: {
-    color: '#a855f7',
-    fontSize: '0.8rem',
-    marginBottom: '0.5rem'
-  },
-  questionText: {
-    fontSize: '1rem',
-    color: 'white',
-    marginBottom: '1rem',
-    lineHeight: '1.5'
-  },
-  optionsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    gap: '0.5rem'
-  },
-  optionButton: {
-    padding: '0.75rem',
-    background: 'rgba(255, 255, 255, 0.1)',
-    border: '1px solid rgba(255, 255, 255, 0.2)',
-    borderRadius: '8px',
-    color: 'white',
-    fontSize: '0.8rem',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease'
-  },
-  submitButton: {
-    width: '100%',
-    padding: '1rem',
-    background: 'linear-gradient(135deg, #a855f7, #4f46e5)',
-    color: 'white',
-    border: 'none',
-    borderRadius: '10px',
-    fontSize: '1rem',
-    fontWeight: '600',
-    cursor: 'pointer',
-    marginTop: '1rem'
-  }
+  container: { maxWidth: '900px', margin: '2rem auto', padding: '2rem', position: 'relative' },
+  header: { marginBottom: '2rem', textAlign: 'center' },
+  module: { color: '#a855f7', fontSize: '0.9rem', fontWeight: '600' },
+  title: { fontSize: '2rem', marginBottom: '0.5rem', color: 'white' },
+  instruction: { color: '#aaa', fontSize: '0.9rem' },
+  progressText: { color: '#10b981', fontSize: '0.8rem', marginTop: '0.5rem' },
+  questionsContainer: { display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '2rem' },
+  questionCard: { background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(10px)', padding: '1.5rem', borderRadius: '15px' },
+  questionNumber: { color: '#a855f7', fontSize: '0.8rem', marginBottom: '0.5rem' },
+  questionText: { fontSize: '1rem', color: 'white', marginBottom: '1rem' },
+  optionsGrid: { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem' },
+  optionButton: { padding: '0.75rem', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)', borderRadius: '8px', color: 'white', cursor: 'pointer' },
+  submitButton: { width: '100%', padding: '1rem', background: 'linear-gradient(135deg, #a855f7, #4f46e5)', color: 'white', border: 'none', borderRadius: '10px', fontSize: '1rem', fontWeight: '600', cursor: 'pointer', marginTop: '1rem' }
 };
 
 export default Module6_AcademicTrack;
